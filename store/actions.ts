@@ -1,7 +1,8 @@
-export interface Action {
-  type: Type;
-  payload: any; // TODO: Specify
-}
+import { ActionCreator } from "redux";
+
+/**
+ * Actions
+ **/
 
 export enum Type {
   SET_SOCIAL_SECURITY_NUMBER,
@@ -10,26 +11,45 @@ export enum Type {
   SET_COUNTRY
 }
 
-export const setSocialSecurityNumber: (
+export type Action = SetStringAction;
+
+interface SetStringAction {
+  readonly type:
+    | Type.SET_SOCIAL_SECURITY_NUMBER
+    | Type.SET_PHONE_NUMBER
+    | Type.SET_EMAIL_ADDRESS
+    | Type.SET_COUNTRY;
+  readonly payload: string;
+}
+
+/**
+ * Action creators
+ **/
+
+export const setSocialSecurityNumber: ActionCreator<SetStringAction> = (
   socialSecurityNumber: string
-) => Action = socialSecurityNumber => ({
+) => ({
   type: Type.SET_SOCIAL_SECURITY_NUMBER,
   payload: socialSecurityNumber
 });
 
-export const setPhoneNumber: (phoneNumber: string) => Action = phoneNumber => ({
+export const setPhoneNumber: ActionCreator<SetStringAction> = (
+  phoneNumber: string
+) => ({
   type: Type.SET_PHONE_NUMBER,
   payload: phoneNumber
 });
 
-export const setEmailAddress: (
+export const setEmailAddress: ActionCreator<SetStringAction> = (
   emailAddress: string
-) => Action = emailAddress => ({
+) => ({
   type: Type.SET_EMAIL_ADDRESS,
   payload: emailAddress
 });
 
-export const setCountry: (country: string) => Action = country => ({
+export const setCountry: ActionCreator<SetStringAction> = (
+  country: string
+) => ({
   type: Type.SET_COUNTRY,
   payload: country
 });

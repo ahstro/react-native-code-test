@@ -14,10 +14,10 @@ interface MainProps {
   phoneNumber: string;
   emailAddress: string;
   country: string;
-  setSocialSecurityNumber: (value: string) => undefined; // TODO: Specify
-  setPhoneNumber: (value: string) => undefined;
-  setEmailAddress: (value: string) => undefined;
-  setCountry: (value: string) => undefined;
+  setSocialSecurityNumber: (socialSecurityNumber: string) => void;
+  setPhoneNumber: (phoneNumber: string) => void;
+  setEmailAddress: (emailAddress: string) => void;
+  setCountry: (country: string) => void;
 }
 
 const Main: React.StatelessComponent<MainProps> = props => (
