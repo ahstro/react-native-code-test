@@ -1,23 +1,30 @@
 import { createStore } from "redux";
+import { Action, Type as ActionType } from "./actions";
 
-const INITIAL_STATE = {
-  party: "All day!"
+const INITIAL_STATE: State = {
+  socialSecurityNumber: "",
+  phoneNumber: "",
+  emailAddress: "",
+  country: ""
 };
 
 export interface State {
-  party: string;
+  socialSecurityNumber: string;
+  phoneNumber: string;
+  emailAddress: string;
+  country: string;
 }
-
-interface Action {
-  type: ActionType;
-}
-
-type ActionType = "NOTHING";
 
 const reducer = (state: State = INITIAL_STATE, action: Action) => {
   switch (action.type) {
-    case "NOTHING":
-      return state;
+    case ActionType.SET_SOCIAL_SECURITY_NUMBER:
+      return { ...state, socialSecurityNumber: action.payload };
+    case ActionType.SET_PHONE_NUMBER:
+      return { ...state, phoneNumber: action.payload };
+    case ActionType.SET_EMAIL_ADDRESS:
+      return { ...state, emailAddress: action.payload };
+    case ActionType.SET_COUNTRY:
+      return { ...state, country: action.payload };
     default:
       return state;
   }
