@@ -2,7 +2,8 @@ export const INITIAL_STATE: State = {
   socialSecurityNumber: "",
   phoneNumber: "",
   emailAddress: "",
-  country: ""
+  country: "",
+  submitting: false
 };
 
 export interface State {
@@ -10,4 +11,5 @@ export interface State {
   phoneNumber: string;
   emailAddress: string;
   country: string;
+  submitting: boolean;
 }

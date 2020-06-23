@@ -8,10 +8,11 @@ export enum Type {
   SET_SOCIAL_SECURITY_NUMBER,
   SET_PHONE_NUMBER,
   SET_EMAIL_ADDRESS,
-  SET_COUNTRY
+  SET_COUNTRY,
+  SUBMIT_BUTTON_PRESSED
 }
 
-export type Action = SetStringAction;
+export type Action = SetStringAction | SubmitButtonPressedAction;
 
 interface SetStringAction {
   readonly type:
@@ -20,6 +21,10 @@ interface SetStringAction {
     | Type.SET_EMAIL_ADDRESS
     | Type.SET_COUNTRY;
   readonly payload: string;
+}
+
+interface SubmitButtonPressedAction {
+  readonly type: Type.SUBMIT_BUTTON_PRESSED;
 }
 
 /**
@@ -52,4 +57,8 @@ export const setCountry: ActionCreator<SetStringAction> = (
 ) => ({
   type: Type.SET_COUNTRY,
   payload: country
+});
+
+export const submitButtonPressed: ActionCreator<SubmitButtonPressedAction> = () => ({
+  type: Type.SUBMIT_BUTTON_PRESSED
 });

@@ -11,6 +11,8 @@ export default (state: State = INITIAL_STATE, action: Action) => {
       return { ...state, emailAddress: action.payload };
     case ActionType.SET_COUNTRY:
       return { ...state, country: action.payload };
+    case ActionType.SUBMIT_BUTTON_PRESSED:
+      return { ...state, submitting: true };
     default:
       return state;
   }
