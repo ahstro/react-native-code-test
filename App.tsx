@@ -1,7 +1,9 @@
 import React from "react";
 import { Provider } from "react-redux";
-import store from "./store";
+import initializeStore from "./store";
 import Main from "./components/Main";
+
+const store = initializeStore();
 
 export default function App() {
   return (

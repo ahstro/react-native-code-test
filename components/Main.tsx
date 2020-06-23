@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { connect } from "react-redux";
-import { State } from "../store";
+import { State } from "../store/state";
 import {
   setSocialSecurityNumber,
   setPhoneNumber,
