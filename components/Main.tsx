@@ -10,6 +10,7 @@ import {
   setCountry,
   submitButtonPressed
 } from "../store/actions";
+import ValidatedTextInput from "./ValidatedTextInput";
 
 interface MainProps {
   socialSecurityNumber: Validated<string>;
@@ -26,21 +27,20 @@ interface MainProps {
 
 const Main: React.StatelessComponent<MainProps> = props => (
   <View style={styles.container}>
-    <TextInput
+    <ValidatedTextInput
       placeholder="socialSecurityNumber"
       onChangeText={props.setSocialSecurityNumber}
-      value={props.socialSecurityNumber.value}
+      validated={props.socialSecurityNumber}
     />
-    <TextInput
+    <ValidatedTextInput
       placeholder="phoneNumber"
       onChangeText={props.setPhoneNumber}
-      value={props.phoneNumber.value}
+      validated={props.phoneNumber}
     />
-    <TextInput
+    <ValidatedTextInput
       placeholder="emailAddress"
       onChangeText={props.setEmailAddress}
-      // TODO stylebasedonvalidity
-      value={props.emailAddress.value}
+      validated={props.emailAddress}
     />
     <TextInput
       placeholder="country"
