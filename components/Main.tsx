@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, TextInput, View, Button } from "react-native";
 import { connect } from "react-redux";
+import { Validated } from "../utils/validation";
 import { State } from "../store/state";
 import {
   setSocialSecurityNumber,
@@ -11,9 +12,9 @@ import {
 } from "../store/actions";
 
 interface MainProps {
-  socialSecurityNumber: string;
-  phoneNumber: string;
-  emailAddress: string;
+  socialSecurityNumber: Validated<string>;
+  phoneNumber: Validated<string>;
+  emailAddress: Validated<string>;
   country: string;
   submitting: boolean;
   setSocialSecurityNumber: (socialSecurityNumber: string) => void;
@@ -28,17 +29,18 @@ const Main: React.StatelessComponent<MainProps> = props => (
     <TextInput
       placeholder="socialSecurityNumber"
       onChangeText={props.setSocialSecurityNumber}
-      value={props.socialSecurityNumber}
+      value={props.socialSecurityNumber.value}
     />
     <TextInput
       placeholder="phoneNumber"
       onChangeText={props.setPhoneNumber}
-      value={props.phoneNumber}
+      value={props.phoneNumber.value}
     />
     <TextInput
       placeholder="emailAddress"
       onChangeText={props.setEmailAddress}
-      value={props.emailAddress}
+      // TODO stylebasedonvalidity
+      value={props.emailAddress.value}
     />
     <TextInput
       placeholder="country"
