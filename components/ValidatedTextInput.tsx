@@ -9,7 +9,11 @@ interface Props extends TextInputProps {
 const ValidatedTextInput: React.StatelessComponent<Props> = props => (
   <TextInput
     {...props}
-    style={[styles.base, getValidityStyle(props.validated.validity)]}
+    style={[
+      props.style,
+      styles.base,
+      getValidityStyle(props.validated.validity)
+    ]}
     value={props.validated.value}
   />
 );
@@ -27,12 +31,12 @@ const getValidityStyle: (validity: Validity) => TextStyle = validity => {
 
 const styles = StyleSheet.create({
   base: {
-    borderWidth: 1,
+    borderWidth: 2,
     borderStyle: "solid"
   },
-  valid: { borderColor: "green" },
-  invalid: { borderColor: "red" },
-  unchecked: { borderColor: "grey" }
+  valid: { borderColor: "#b3dea9" },
+  invalid: { borderColor: "#f58484" },
+  unchecked: { borderColor: "#aab0bd" }
 });
 
 export default ValidatedTextInput;

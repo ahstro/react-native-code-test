@@ -28,30 +28,39 @@ interface MainProps {
 const Main: React.StatelessComponent<MainProps> = props => (
   <View style={styles.container}>
     <ValidatedTextInput
-      placeholder="socialSecurityNumber"
+      placeholder="YYMMDD-XXXX"
       onChangeText={props.setSocialSecurityNumber}
       validated={props.socialSecurityNumber}
+      style={styles.box}
+      keyboardType="number-pad"
     />
     <ValidatedTextInput
-      placeholder="phoneNumber"
+      placeholder="+46 7XX XXX XXX"
       onChangeText={props.setPhoneNumber}
       validated={props.phoneNumber}
+      style={styles.box}
+      keyboardType="phone-pad"
     />
     <ValidatedTextInput
-      placeholder="emailAddress"
+      placeholder="jane.doe@example.com"
       onChangeText={props.setEmailAddress}
       validated={props.emailAddress}
+      style={styles.box}
+      keyboardType="email-address"
+      autoCapitalize="none"
     />
     <TextInput
       placeholder="country"
       onChangeText={props.setCountry}
       value={props.country}
+      style={styles.box}
     />
     <Button
       onPress={props.submitButtonPressed}
       title={props.submitting ? "Submitting" : "Submit"}
       disabled={props.submitting}
       accessibilityLabel="Submit form"
+      color="#4583ff"
     />
   </View>
 );
@@ -60,8 +69,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    padding: 24
+  },
+  box: {
+    marginVertical: 12,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 6
   }
 });
 
