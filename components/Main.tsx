@@ -4,11 +4,12 @@ import {
   Text,
   TextInput,
   View,
+  ScrollView,
   Button,
   Picker
 } from "react-native";
 import { connect } from "react-redux";
-import { Validated } from "../utils/validation";
+import { Validated as TValidated } from "../utils/validation";
 import { State } from "../store/state";
 import { Country, PLACEHOLDER_COUNTRY } from "../store/state/country";
 import {
@@ -18,13 +19,13 @@ import {
   setCountry,
   submitButtonPressed
 } from "../store/actions";
-import ValidatedTextInput from "./ValidatedTextInput";
+import Validated from "./Validated";
 
 interface MainProps {
-  socialSecurityNumber: Validated<string>;
-  phoneNumber: Validated<string>;
-  emailAddress: Validated<string>;
-  country: Validated<Country>;
+  socialSecurityNumber: TValidated<string>;
+  phoneNumber: TValidated<string>;
+  emailAddress: TValidated<string>;
+  country: TValidated<Country>;
   countries: Array<Country>;
   submitting: boolean;
   setSocialSecurityNumber: (socialSecurityNumber: string) => void;
@@ -36,64 +37,92 @@ interface MainProps {
 
 const Main: React.StatelessComponent<MainProps> = props => (
   <View style={styles.container}>
-    <ValidatedTextInput
-      placeholder="YYMMDD-XXXX"
-      onChangeText={props.setSocialSecurityNumber}
-      validated={props.socialSecurityNumber}
-      style={styles.box}
-      keyboardType="number-pad"
-    />
-    <ValidatedTextInput
-      placeholder="+46 7XX XXX XXX"
-      onChangeText={props.setPhoneNumber}
-      validated={props.phoneNumber}
-      style={styles.box}
-      keyboardType="phone-pad"
-    />
-    <ValidatedTextInput
-      placeholder="jane.doe@example.com"
-      onChangeText={props.setEmailAddress}
-      validated={props.emailAddress}
-      style={styles.box}
-      keyboardType="email-address"
-      autoCapitalize="none"
-    />
-    <Picker
-      style={styles.box}
-      selectedValue={props.country.value}
-      onValueChange={props.setCountry}
-    >
-      <Picker.Item
-        label={PLACEHOLDER_COUNTRY.name}
-        key="placeholder"
-        value={PLACEHOLDER_COUNTRY}
+    <ScrollView style={styles.form}>
+      <Validated
+        style={styles.box}
+        validity={props.socialSecurityNumber.validity}
+      >
+        <TextInput
+          placeholder="YYMMDD-XXXX"
+          onChangeText={props.setSocialSecurityNumber}
+          value={props.socialSecurityNumber.value}
+          keyboardType="number-pad"
+        />
+      </Validated>
+      <Validated style={styles.box} validity={props.phoneNumber.validity}>
+        <TextInput
+          placeholder="+46 7XX XXX XXX"
+          onChangeText={props.setPhoneNumber}
+          value={props.phoneNumber.value}
+          keyboardType="phone-pad"
+        />
+      </Validated>
+      <Validated style={styles.box} validity={props.emailAddress.validity}>
+        <TextInput
+          placeholder="jane.doe@example.com"
+          onChangeText={props.setEmailAddress}
+          value={props.emailAddress.value}
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+      </Validated>
+      <Validated
+        style={[styles.box, styles.picker]}
+        validity={props.country.validity}
+      >
+        <Picker
+          selectedValue={props.country.value}
+          onValueChange={props.setCountry}
+        >
+          <Picker.Item
+            color="#c8c8c8"
+            label={PLACEHOLDER_COUNTRY.name}
+            key="placeholder"
+            value={PLACEHOLDER_COUNTRY}
+          />
+          {props.countries.map(country => (
+            <Picker.Item
+              label={country.name}
+              key={country.name}
+              value={country}
+            />
+          ))}
+        </Picker>
+      </Validated>
+    </ScrollView>
+    <View style={styles.button}>
+      <Button
+        onPress={props.submitButtonPressed}
+        title={props.submitting ? "Submitting" : "Submit"}
+        disabled={props.submitting}
+        accessibilityLabel="Submit form"
+        color="#4583ff"
       />
-      {props.countries.map(country => (
-        <Picker.Item label={country.name} key={country.name} value={country} />
-      ))}
-    </Picker>
-    <Button
-      onPress={props.submitButtonPressed}
-      title={props.submitting ? "Submitting" : "Submit"}
-      disabled={props.submitting}
-      accessibilityLabel="Submit form"
-      color="#4583ff"
-    />
+    </View>
   </View>
 );
 
+const SPACING = 24;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
     justifyContent: "center",
-    padding: 24
+    paddingVertical: SPACING
+  },
+  form: {
+    flex: 1,
+    paddingHorizontal: SPACING
+  },
+  button: {
+    paddingHorizontal: SPACING
   },
   box: {
-    marginVertical: 12,
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: 6
+    marginVertical: SPACING / 2
+  },
+  picker: {
+    paddingVertical: 0,
+    paddingHorizontal: 4
   }
 });
 
