@@ -9,6 +9,7 @@
  * TODO: Write/lib these properly when you get internet access
  **/
 
+import Personnummer from "personnummer";
 import * as Normalize from "./normalization";
 
 export enum Validity {
@@ -24,17 +25,15 @@ export interface Validated<T> {
   validity: Validity;
 }
 
+const MINIMUM_NORMALIZED_SSN_LENGTH = 10;
 export const socialSecurityNumber: Validator<string> = socialSecurityNumber => {
   const normalized = Normalize.socialSecurityNumber(socialSecurityNumber);
-  if (normalized.length < 10) {
+  if (normalized.length < MINIMUM_NORMALIZED_SSN_LENGTH) {
     return { value: socialSecurityNumber, validity: Validity.Unchecked };
   }
   return {
     value: socialSecurityNumber,
-    validity:
-      normalized.length == 10 || normalized.length == 12
-        ? Validity.Valid
-        : Validity.Invalid
+    validity: Personnummer.valid(normalized) ? Validity.Valid : Validity.Invalid
   };
 };
 

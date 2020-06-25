@@ -13,10 +13,9 @@ type Normalizer<T> = (value: T) => T;
 
 /**
  * Removes superfluous characters, and standardizes regional code
- * TODO: Add example
  **/
 export const socialSecurityNumber: Normalizer<string> = socialSecurityNumber =>
-  socialSecurityNumber.replace("-", "").replace(" ", "");
+  socialSecurityNumber.replace(/\s/g, "");
 
 /**
  * Takes a phone number, removes superfluous characters, and standardizes regional code

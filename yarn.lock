@@ -4144,6 +4144,11 @@ path-type@^2.0.0:
   dependencies:
     pify "^2.0.0"
 
+personnummer@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.npmjs.org/personnummer/-/personnummer-3.1.0.tgz#87169918f61f0003cd2502fa44b796af42ebd792"
+  integrity sha512-Aiyyh0+N7sGdZUUp6g6evTcHgwQ7rn3UIOTfBEpmCks2rNja0rOfUtz7K/ZVumd5aOULGQ2n3BI9UNuOsgqYaw==
+
 pify@^2.0.0:
   version "2.3.0"
   resolved "https://registry.npmjs.org/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
