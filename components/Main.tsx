@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, TextInput, View, Button } from "react-native";
 import { connect } from "react-redux";
 import { Validated } from "../utils/validation";
-import { State } from "../store/state";
+import { State, Country } from "../store/state";
 import {
   setSocialSecurityNumber,
   setPhoneNumber,
@@ -16,12 +16,12 @@ interface MainProps {
   socialSecurityNumber: Validated<string>;
   phoneNumber: Validated<string>;
   emailAddress: Validated<string>;
-  country: string;
+  country?: Country;
   submitting: boolean;
   setSocialSecurityNumber: (socialSecurityNumber: string) => void;
   setPhoneNumber: (phoneNumber: string) => void;
   setEmailAddress: (emailAddress: string) => void;
-  setCountry: (country: string) => void;
+  setCountry: (country: Country) => void;
   submitButtonPressed: () => void;
 }
 
@@ -49,12 +49,9 @@ const Main: React.StatelessComponent<MainProps> = props => (
       keyboardType="email-address"
       autoCapitalize="none"
     />
-    <TextInput
-      placeholder="country"
-      onChangeText={props.setCountry}
-      value={props.country}
-      style={styles.box}
-    />
+    <Text style={styles.box}>
+      {props.country ? props.country.name : "Select country"}
+    </Text>
     <Button
       onPress={props.submitButtonPressed}
       title={props.submitting ? "Submitting" : "Submit"}

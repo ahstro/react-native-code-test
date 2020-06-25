@@ -13,9 +13,12 @@ export default (state: State = INITIAL_STATE, action: Action) => {
       return { ...state, phoneNumber: Validate.phoneNumber(action.payload) };
     case ActionType.SET_EMAIL_ADDRESS:
       return { ...state, emailAddress: Validate.emailAddress(action.payload) };
-
     case ActionType.SET_COUNTRY:
       return { ...state, country: action.payload };
+    case ActionType.FETCHING_COUNTRIES:
+      return state;
+    case ActionType.FETCHED_COUNTRIES:
+      return { ...state, countries: action.payload };
     case ActionType.SUBMIT_BUTTON_PRESSED:
       return { ...state, submitting: true };
     default:
