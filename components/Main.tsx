@@ -1,5 +1,12 @@
 import React from "react";
-import { StyleSheet, Text, TextInput, View, Button } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  Button,
+  Picker
+} from "react-native";
 import { connect } from "react-redux";
 import { Validated } from "../utils/validation";
 import { State, Country } from "../store/state";
@@ -17,6 +24,7 @@ interface MainProps {
   phoneNumber: Validated<string>;
   emailAddress: Validated<string>;
   country?: Country;
+  countries: Array<Country>;
   submitting: boolean;
   setSocialSecurityNumber: (socialSecurityNumber: string) => void;
   setPhoneNumber: (phoneNumber: string) => void;
@@ -49,9 +57,16 @@ const Main: React.StatelessComponent<MainProps> = props => (
       keyboardType="email-address"
       autoCapitalize="none"
     />
-    <Text style={styles.box}>
-      {props.country ? props.country.name : "Select country"}
-    </Text>
+    <Picker
+      prompt="Select country..."
+      style={styles.box}
+      selectedValue={props.country}
+      onValueChange={props.setCountry}
+    >
+      {props.countries.map(country => (
+        <Picker.Item label={country.name} key={country.name} value={country} />
+      ))}
+    </Picker>
     <Button
       onPress={props.submitButtonPressed}
       title={props.submitting ? "Submitting" : "Submit"}
@@ -83,6 +98,7 @@ export default connect(
     phoneNumber: state.phoneNumber,
     emailAddress: state.emailAddress,
     country: state.country,
+    countries: state.countries,
     submitting: state.submitting
   }),
   {

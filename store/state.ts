@@ -6,7 +6,7 @@ export const INITIAL_STATE: State = {
   phoneNumber: Validate.phoneNumber(""),
   emailAddress: Validate.emailAddress(""),
   country: undefined,
-  countries: undefined,
+  countries: [],
   submitting: false
 };
 
@@ -15,7 +15,7 @@ export interface State {
   phoneNumber: Validated<string>;
   emailAddress: Validated<string>;
   country?: Country;
-  countries?: Array<Country>;
+  countries: Array<Country>;
   submitting: boolean;
 }
 
@@ -25,4 +25,4 @@ export interface Country {
 }
 
 export const missingCountries: (s: State) => boolean = state =>
-  !state.countries;
+  state.countries.length === 0;
