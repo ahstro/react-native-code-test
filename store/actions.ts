@@ -1,6 +1,6 @@
 import { ActionCreator } from "redux";
 import { ThunkAction } from "redux-thunk";
-import { missingCountries, State } from "./state";
+import { isMissingCountries, State } from "./state";
 import { Country } from "./state/country";
 
 /**
@@ -97,7 +97,7 @@ export const fetchCountries: ActionCreator<ThunkAction<
   unknown,
   FetchingCountriesAction | FetchedCountriesAction
 >> = () => (dispatch, getState) => {
-  if (!missingCountries(getState())) {
+  if (!isMissingCountries(getState())) {
     return;
   }
   dispatch(fetchingCountries());

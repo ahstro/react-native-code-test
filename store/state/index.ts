@@ -30,5 +30,5 @@ export const INITIAL_STATE: State = {
 /**
  * Helpers
  **/
-export const missingCountries: (s: State) => boolean = state =>
+export const isMissingCountries: (s: State) => boolean = state =>
   state.countries.length === 0;
