@@ -52,10 +52,18 @@ export const phoneNumber: Validator<string> = phoneNumber => {
   };
 };
 
+// Regex taken from emailregex.com. Not about to try writing an email regex again... 🤷
+const EMAIL_ADDRESS_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const MINIMUM_NORMALIZED_EMAIL_ADDRESS_LENGTH = 1;
 export const emailAddress: Validator<string> = emailAddress => {
   const normalized = Normalize.emailAddress(emailAddress);
-  if (normalized.length < 10) {
-    return { value: emailAddress, validity: Validity.Unchecked };
+  if (normalized.length < MINIMUM_NORMALIZED_EMAIL_ADDRESS_LENGTH) {
+    return { value: normalized, validity: Validity.Unchecked };
   }
-  return { value: emailAddress, validity: Validity.Valid };
+  return {
+    value: normalized,
+    validity: EMAIL_ADDRESS_REGEX.test(normalized)
+      ? Validity.Valid
+      : Validity.Invalid
+  };
 };
