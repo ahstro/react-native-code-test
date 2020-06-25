@@ -19,8 +19,10 @@ export default (state: State = INITIAL_STATE, action: Action) => {
       return state;
     case ActionType.FETCHED_COUNTRIES:
       return { ...state, countries: action.payload };
-    case ActionType.SUBMIT_BUTTON_PRESSED:
-      return { ...state, submitting: true };
+    case ActionType.SUBMIT_SUCCEEDED:
+      return { ...state, submitted: true };
+    case ActionType.SUBMIT_FAILED:
+      return { ...state, ...action.payload };
     default:
       return state;
   }

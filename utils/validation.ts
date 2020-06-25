@@ -76,3 +76,14 @@ export const country: Validator<Country> = country => {
       country === PLACEHOLDER_COUNTRY ? Validity.Unchecked : Validity.Valid
   };
 };
+
+/**
+ * Takes any validated and turns Unchecked into Invalid
+ **/
+export const strict: Validator<any> = validated => ({
+  ...validated,
+  validity:
+    validated.validity === Validity.Unchecked
+      ? Validity.Invalid
+      : validated.validity
+});

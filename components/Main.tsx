@@ -27,7 +27,7 @@ interface MainProps {
   emailAddress: TValidated<string>;
   country: TValidated<Country>;
   countries: Array<Country>;
-  submitting: boolean;
+  submitted: boolean;
   setSocialSecurityNumber: (socialSecurityNumber: string) => void;
   setPhoneNumber: (phoneNumber: string) => void;
   setEmailAddress: (emailAddress: string) => void;
@@ -93,8 +93,8 @@ const Main: React.StatelessComponent<MainProps> = props => (
     <View style={styles.button}>
       <Button
         onPress={props.submitButtonPressed}
-        title={props.submitting ? "Submitting" : "Submit"}
-        disabled={props.submitting}
+        title={props.submitted ? "Submitted!" : "Submit"}
+        disabled={props.submitted}
         accessibilityLabel="Submit form"
         color="#4583ff"
       />
@@ -133,7 +133,7 @@ export default connect(
     emailAddress: state.emailAddress,
     country: state.country,
     countries: state.countries,
-    submitting: state.submitting
+    submitted: state.submitted
   }),
   {
     setSocialSecurityNumber,

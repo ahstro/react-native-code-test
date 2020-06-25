@@ -12,7 +12,7 @@ export interface State {
   emailAddress: Validated<string>;
   country: Validated<Country>;
   countries: Array<Country>;
-  submitting: boolean;
+  submitted: boolean;
 }
 
 /**
@@ -24,7 +24,7 @@ export const INITIAL_STATE: State = {
   emailAddress: Validate.emailAddress(""),
   country: Validate.country(PLACEHOLDER_COUNTRY),
   countries: [],
-  submitting: false
+  submitted: false
 };
 
 /**

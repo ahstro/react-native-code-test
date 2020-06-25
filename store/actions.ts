@@ -2,6 +2,8 @@ import { ActionCreator } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { isMissingCountries, State } from "./state";
 import { Country } from "./state/country";
+import * as Validate from "../utils/validation";
+import { Validity, Validated } from "../utils/validation";
 
 /**
  * Actions
@@ -12,6 +14,8 @@ export enum Type {
   SET_PHONE_NUMBER,
   SET_EMAIL_ADDRESS,
   SET_COUNTRY,
+  SUBMIT_FAILED,
+  SUBMIT_SUCCEEDED,
   FETCHING_COUNTRIES,
   FETCHED_COUNTRIES,
   SUBMIT_BUTTON_PRESSED
@@ -20,7 +24,8 @@ export enum Type {
 export type Action =
   | SetStringAction
   | SetCountryAction
-  | SubmitButtonPressedAction
+  | SubmitSucceededAction
+  | SubmitFailedAction
   | FetchingCountriesAction
   | FetchedCountriesAction;
 
@@ -37,8 +42,18 @@ interface SetCountryAction {
   readonly payload: Country;
 }
 
-interface SubmitButtonPressedAction {
-  readonly type: Type.SUBMIT_BUTTON_PRESSED;
+interface SubmitFailedAction {
+  readonly type: Type.SUBMIT_FAILED;
+  readonly payload: {
+    socialSecurityNumber: Validated<string>;
+    phoneNumber: Validated<string>;
+    emailAddress: Validated<string>;
+    country: Validated<Country>;
+  };
+}
+
+interface SubmitSucceededAction {
+  readonly type: Type.SUBMIT_SUCCEEDED;
 }
 
 interface FetchingCountriesAction {
@@ -82,9 +97,31 @@ export const setCountry: ActionCreator<SetCountryAction> = (
   payload: country
 });
 
-export const submitButtonPressed: ActionCreator<SubmitButtonPressedAction> = () => ({
-  type: Type.SUBMIT_BUTTON_PRESSED
-});
+export const submitButtonPressed: ActionCreator<ThunkAction<
+  void,
+  State,
+  unknown,
+  SubmitSucceededAction | SubmitFailedAction
+>> = () => (dispatch, getState) => {
+  const state = getState();
+  const strictlyValidated = {
+    socialSecurityNumber: Validate.strict(state.socialSecurityNumber),
+    phoneNumber: Validate.strict(state.phoneNumber),
+    emailAddress: Validate.strict(state.emailAddress),
+    country: Validate.strict(state.country)
+  };
+  const anyInvalid: boolean = Object.values(strictlyValidated)
+    .map(validated => validated.validity)
+    .some(validity => validity === Validity.Invalid);
+  if (anyInvalid) {
+    dispatch({ type: Type.SUBMIT_FAILED, payload: strictlyValidated });
+  } else {
+    console.log("Success");
+    dispatch({
+      type: Type.SUBMIT_SUCCEEDED
+    });
+  }
+};
 
 const fetchingCountries: ActionCreator<FetchingCountriesAction> = () => ({
   type: Type.FETCHING_COUNTRIES
