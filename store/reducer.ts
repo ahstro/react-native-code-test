@@ -14,7 +14,7 @@ export default (state: State = INITIAL_STATE, action: Action) => {
     case ActionType.SET_EMAIL_ADDRESS:
       return { ...state, emailAddress: Validate.emailAddress(action.payload) };
     case ActionType.SET_COUNTRY:
-      return { ...state, country: action.payload };
+      return { ...state, country: Validate.country(action.payload) };
     case ActionType.FETCHING_COUNTRIES:
       return state;
     case ActionType.FETCHED_COUNTRIES:

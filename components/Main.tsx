@@ -9,7 +9,8 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { Validated } from "../utils/validation";
-import { State, Country } from "../store/state";
+import { State } from "../store/state";
+import { Country, PLACEHOLDER_COUNTRY } from "../store/state/country";
 import {
   setSocialSecurityNumber,
   setPhoneNumber,
@@ -23,7 +24,7 @@ interface MainProps {
   socialSecurityNumber: Validated<string>;
   phoneNumber: Validated<string>;
   emailAddress: Validated<string>;
-  country?: Country;
+  country: Validated<Country>;
   countries: Array<Country>;
   submitting: boolean;
   setSocialSecurityNumber: (socialSecurityNumber: string) => void;
@@ -58,11 +59,15 @@ const Main: React.StatelessComponent<MainProps> = props => (
       autoCapitalize="none"
     />
     <Picker
-      prompt="Select country..."
       style={styles.box}
-      selectedValue={props.country}
+      selectedValue={props.country.value}
       onValueChange={props.setCountry}
     >
+      <Picker.Item
+        label={PLACEHOLDER_COUNTRY.name}
+        key="placeholder"
+        value={PLACEHOLDER_COUNTRY}
+      />
       {props.countries.map(country => (
         <Picker.Item label={country.name} key={country.name} value={country} />
       ))}

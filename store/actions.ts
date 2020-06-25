@@ -1,6 +1,7 @@
 import { ActionCreator } from "redux";
 import { ThunkAction } from "redux-thunk";
-import { missingCountries, Country, State } from "./state";
+import { missingCountries, State } from "./state";
+import { Country } from "./state/country";
 
 /**
  * Actions
