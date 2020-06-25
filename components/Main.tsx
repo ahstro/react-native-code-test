@@ -17,7 +17,8 @@ import {
   setPhoneNumber,
   setEmailAddress,
   setCountry,
-  submitButtonPressed
+  submitButtonPressed,
+  clearButtonPressed
 } from "../store/actions";
 import Validated from "./Validated";
 
@@ -33,6 +34,7 @@ interface MainProps {
   setEmailAddress: (emailAddress: string) => void;
   setCountry: (country: Country) => void;
   submitButtonPressed: () => void;
+  clearButtonPressed: () => void;
 }
 
 const Main: React.StatelessComponent<MainProps> = props => (
@@ -90,14 +92,24 @@ const Main: React.StatelessComponent<MainProps> = props => (
         </Picker>
       </Validated>
     </ScrollView>
-    <View style={styles.button}>
-      <Button
-        onPress={props.submitButtonPressed}
-        title={props.submitted ? "Submitted!" : "Submit"}
-        disabled={props.submitted}
-        accessibilityLabel="Submit form"
-        color="#4583ff"
-      />
+    <View style={styles.buttons}>
+      <View style={styles.clearButton}>
+        <Button
+          onPress={props.clearButtonPressed}
+          title="Clear"
+          accessibilityLabel="Clear form"
+          color="#f54242"
+        />
+      </View>
+      <View style={styles.submitButton}>
+        <Button
+          onPress={props.submitButtonPressed}
+          title={props.submitted ? "Submitted!" : "Submit"}
+          disabled={props.submitted}
+          accessibilityLabel="Submit form"
+          color="#4583ff"
+        />
+      </View>
     </View>
   </View>
 );
@@ -114,8 +126,19 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: SPACING
   },
-  button: {
+  buttons: {
+    flexDirection: "row",
+    alignItems: "flex-end",
     paddingHorizontal: SPACING
+  },
+  clearButton: {
+    flexGrow: 1,
+    flexBasis: 0,
+    marginRight: SPACING
+  },
+  submitButton: {
+    flexGrow: 1,
+    flexBasis: 0
   },
   box: {
     marginVertical: SPACING / 2
@@ -140,6 +163,7 @@ export default connect(
     setPhoneNumber,
     setEmailAddress,
     setCountry,
-    submitButtonPressed
+    submitButtonPressed,
+    clearButtonPressed
   }
 )(Main);

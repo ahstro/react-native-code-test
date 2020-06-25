@@ -16,6 +16,7 @@ export enum Type {
   SET_COUNTRY,
   SUBMIT_FAILED,
   SUBMIT_SUCCEEDED,
+  CLEAR_BUTTON_PRESSED,
   FETCHING_COUNTRIES,
   FETCHED_COUNTRIES,
   SUBMIT_BUTTON_PRESSED
@@ -27,7 +28,8 @@ export type Action =
   | SubmitSucceededAction
   | SubmitFailedAction
   | FetchingCountriesAction
-  | FetchedCountriesAction;
+  | FetchedCountriesAction
+  | ClearButtonPressedAction;
 
 interface SetStringAction {
   readonly type:
@@ -54,6 +56,10 @@ interface SubmitFailedAction {
 
 interface SubmitSucceededAction {
   readonly type: Type.SUBMIT_SUCCEEDED;
+}
+
+interface ClearButtonPressedAction {
+  readonly type: Type.CLEAR_BUTTON_PRESSED;
 }
 
 interface FetchingCountriesAction {
@@ -146,3 +152,7 @@ export const fetchCountries: ActionCreator<ThunkAction<
     }))
     .then(dispatch);
 };
+
+export const clearButtonPressed: ActionCreator<ClearButtonPressedAction> = () => ({
+  type: Type.CLEAR_BUTTON_PRESSED
+});

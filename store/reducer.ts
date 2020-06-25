@@ -23,6 +23,15 @@ export default (state: State = INITIAL_STATE, action: Action) => {
       return { ...state, submitted: true };
     case ActionType.SUBMIT_FAILED:
       return { ...state, ...action.payload };
+    case ActionType.CLEAR_BUTTON_PRESSED:
+      return {
+        ...state,
+        socialSecurityNumber: INITIAL_STATE.socialSecurityNumber,
+        phoneNumber: INITIAL_STATE.phoneNumber,
+        emailAddress: INITIAL_STATE.emailAddress,
+        country: INITIAL_STATE.country,
+        submitted: INITIAL_STATE.submitted
+      };
     default:
       return state;
   }
