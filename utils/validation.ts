@@ -37,12 +37,19 @@ export const socialSecurityNumber: Validator<string> = socialSecurityNumber => {
   };
 };
 
+const PHONE_NUMBER_REGEX = /^\+46\d{6,12}$/;
+const MINIMUM_NORMALIZED_PHONE_NO_LENGTH = 9;
 export const phoneNumber: Validator<string> = phoneNumber => {
   const normalized = Normalize.phoneNumber(phoneNumber);
-  if (normalized.length < 10) {
+  if (normalized.length < MINIMUM_NORMALIZED_PHONE_NO_LENGTH) {
     return { value: phoneNumber, validity: Validity.Unchecked };
   }
-  return { value: phoneNumber, validity: Validity.Valid };
+  return {
+    value: phoneNumber,
+    validity: PHONE_NUMBER_REGEX.test(normalized)
+      ? Validity.Valid
+      : Validity.Invalid
+  };
 };
 
 export const emailAddress: Validator<string> = emailAddress => {

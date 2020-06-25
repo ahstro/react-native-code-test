@@ -24,9 +24,9 @@ export const socialSecurityNumber: Normalizer<string> = socialSecurityNumber =>
  **/
 export const phoneNumber: Normalizer<string> = phoneNumber =>
   phoneNumber
-    .replace("-", "")
-    .replace(" ", "")
-    .replace(/^00?/, "+46");
+    .replace(/[-\s()]/g, "") // Remove superflous characters
+    .replace(/^00/, "+") // Replace international call prefix with +
+    .replace(/^0/, "+46"); // Replace leading 0 with country code
 
 /**
  * Basically just trims whitespace. Mostly here for consistency 🤷
