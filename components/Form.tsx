@@ -40,12 +40,28 @@ interface Props {
 }
 
 class Form extends React.Component<Props> {
+  constructor(props: Props) {
+    super(props);
+    this.fetchCountriesIfMissing = this.fetchCountriesIfMissing.bind(this);
+    this.countriesAreMissing = this.countriesAreMissing.bind(this);
+  }
+
+  countriesAreMissing() {
+    return this.props.countries.length === 0;
+  }
+
+  fetchCountriesIfMissing() {
+    if (this.countriesAreMissing()) {
+      this.props.fetchCountries();
+    }
+  }
+
   componentDidMount() {
-    this.props.fetchCountries();
+    this.fetchCountriesIfMissing();
   }
 
   componentDidUpdate() {
-    this.props.fetchCountries();
+    this.fetchCountriesIfMissing();
   }
 
   render() {

@@ -26,9 +26,3 @@ export const INITIAL_STATE: State = {
   countries: [],
   submitted: false
 };
-
-/**
- * Helpers
- **/
-export const isMissingCountries: (s: State) => boolean = state =>
-  state.countries.length === 0;

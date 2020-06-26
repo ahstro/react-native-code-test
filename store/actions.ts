@@ -1,7 +1,7 @@
 import { ActionCreator } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { purgeStoredState } from "redux-persist";
-import { isMissingCountries, State } from "./state";
+import { State } from "./state";
 import { Country } from "./state/country";
 import * as Validate from "../utils/validation";
 import { Validity, Validated } from "../utils/validation";
@@ -146,10 +146,7 @@ export const fetchCountries: ActionCreator<ThunkAction<
   State,
   unknown,
   FetchingCountriesAction | FetchedCountriesAction
->> = () => (dispatch, getState) => {
-  if (!isMissingCountries(getState())) {
-    return;
-  }
+>> = () => dispatch => {
   dispatch(fetchingCountries());
   fetch(COUNTRIES_ENDPOINT)
     .then((res: Response) => res.json())
