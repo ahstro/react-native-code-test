@@ -145,7 +145,8 @@ const styles = StyleSheet.create({
   },
   picker: {
     paddingVertical: 0,
-    paddingHorizontal: 4
+    paddingLeft: 4,
+    paddingRight: SPACING / 2
   }
 });
 
