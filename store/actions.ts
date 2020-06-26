@@ -1,9 +1,11 @@
 import { ActionCreator } from "redux";
 import { ThunkAction } from "redux-thunk";
+import { purgeStoredState } from "redux-persist";
 import { isMissingCountries, State } from "./state";
 import { Country } from "./state/country";
 import * as Validate from "../utils/validation";
 import { Validity, Validated } from "../utils/validation";
+import { persistConfig } from "../store/persist";
 
 /**
  * Actions
@@ -122,10 +124,15 @@ export const submitButtonPressed: ActionCreator<ThunkAction<
   if (anyInvalid) {
     dispatch({ type: Type.SUBMIT_FAILED, payload: strictlyValidated });
   } else {
+    // TODO: Urgh, dispatch(...).then doesn't actually
+    // do what I want, so I'll leave this hack here for
+    // a bit, while I do other stuff
+    // In other words: Remove horrible setTimeout use
+    dispatch({ type: Type.SUBMIT_SUCCEEDED });
+    setTimeout(() => {
+      purgeStoredState(persistConfig);
+    }, 1000);
     console.log("Success");
-    dispatch({
-      type: Type.SUBMIT_SUCCEEDED
-    });
   }
 };
 
