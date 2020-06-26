@@ -2,7 +2,6 @@ import { ActionCreator } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { purgeStoredState } from "redux-persist";
 import { State } from "./state";
-import { Country } from "./state/country";
 import * as Validate from "../utils/validation";
 import { Validity, Validated } from "../utils/validation";
 import { persistConfig } from "../store/persist";
@@ -26,7 +25,6 @@ export enum Type {
 
 export type Action =
   | SetStringAction
-  | SetCountryAction
   | SubmitSucceededAction
   | SubmitFailedAction
   | FetchingCountriesAction
@@ -37,13 +35,9 @@ interface SetStringAction {
   readonly type:
     | Type.SET_SOCIAL_SECURITY_NUMBER
     | Type.SET_PHONE_NUMBER
-    | Type.SET_EMAIL_ADDRESS;
+    | Type.SET_EMAIL_ADDRESS
+    | Type.SET_COUNTRY;
   readonly payload: string;
-}
-
-interface SetCountryAction {
-  readonly type: Type.SET_COUNTRY;
-  readonly payload: Country;
 }
 
 interface SubmitFailedAction {
@@ -52,7 +46,7 @@ interface SubmitFailedAction {
     socialSecurityNumber: Validated<string>;
     phoneNumber: Validated<string>;
     emailAddress: Validated<string>;
-    country: Validated<Country>;
+    country: Validated<string>;
   };
 }
 
@@ -70,7 +64,7 @@ interface FetchingCountriesAction {
 
 interface FetchedCountriesAction {
   readonly type: Type.FETCHED_COUNTRIES;
-  readonly payload: Array<Country>;
+  readonly payload: Array<string>;
 }
 
 /**
@@ -98,8 +92,8 @@ export const setEmailAddress: ActionCreator<SetStringAction> = (
   payload: emailAddress
 });
 
-export const setCountry: ActionCreator<SetCountryAction> = (
-  country: Country
+export const setCountry: ActionCreator<SetStringAction> = (
+  country: string
 ) => ({
   type: Type.SET_COUNTRY,
   payload: country
@@ -150,9 +144,9 @@ export const fetchCountries: ActionCreator<ThunkAction<
   dispatch(fetchingCountries());
   fetch(COUNTRIES_ENDPOINT)
     .then((res: Response) => res.json())
-    .then((countries: Array<Country>) => ({
+    .then((countries: Array<{ name: string }>) => ({
       type: Type.FETCHED_COUNTRIES,
-      payload: countries
+      payload: countries.map(country => country.name)
     }))
     .then(dispatch);
 };

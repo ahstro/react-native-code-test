@@ -10,7 +10,7 @@
 
 import Personnummer from "personnummer";
 import * as Normalize from "./normalization";
-import { Country, PLACEHOLDER_COUNTRY } from "../store/state/country";
+import { PLACEHOLDER_COUNTRY } from "../store/state/country";
 
 export enum Validity {
   Valid,
@@ -68,7 +68,7 @@ export const emailAddress: Validator<string> = emailAddress => {
   };
 };
 
-export const country: Validator<Country> = country => {
+export const country: Validator<string> = country => {
   return {
     value: country,
     validity:

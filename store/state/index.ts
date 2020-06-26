@@ -1,6 +1,6 @@
 import { Validity, Validated } from "../../utils/validation";
 import * as Validate from "../../utils/validation";
-import { Country, PLACEHOLDER_COUNTRY } from "./country";
+import { PLACEHOLDER_COUNTRY } from "./country";
 
 /**
  * Types
@@ -10,8 +10,8 @@ export interface State {
   socialSecurityNumber: Validated<string>;
   phoneNumber: Validated<string>;
   emailAddress: Validated<string>;
-  country: Validated<Country>;
-  countries: Array<Country>;
+  country: Validated<string>;
+  countries: Array<string>;
   submitted: boolean;
 }
 

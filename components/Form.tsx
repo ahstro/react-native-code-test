@@ -11,7 +11,7 @@ import {
 import { connect } from "react-redux";
 import { Validated as TValidated } from "../utils/validation";
 import { State } from "../store/state";
-import { Country, PLACEHOLDER_COUNTRY } from "../store/state/country";
+import { PLACEHOLDER_COUNTRY } from "../store/state/country";
 import {
   setSocialSecurityNumber,
   setPhoneNumber,
@@ -27,13 +27,13 @@ interface Props {
   socialSecurityNumber: TValidated<string>;
   phoneNumber: TValidated<string>;
   emailAddress: TValidated<string>;
-  country: TValidated<Country>;
-  countries: Array<Country>;
+  country: TValidated<string>;
+  countries: Array<string>;
   submitted: boolean;
   setSocialSecurityNumber: (socialSecurityNumber: string) => void;
   setPhoneNumber: (phoneNumber: string) => void;
   setEmailAddress: (emailAddress: string) => void;
-  setCountry: (country: Country) => void;
+  setCountry: (country: string) => void;
   fetchCountries: () => void;
   submitButtonPressed: () => void;
   clearButtonPressed: () => void;
@@ -118,16 +118,12 @@ class Form extends React.Component<Props> {
             <Picker selectedValue={country.value} onValueChange={setCountry}>
               <Picker.Item
                 color="#c8c8c8"
-                label={PLACEHOLDER_COUNTRY.name}
+                label={PLACEHOLDER_COUNTRY}
                 key="placeholder"
                 value={PLACEHOLDER_COUNTRY}
               />
               {countries.map(country => (
-                <Picker.Item
-                  label={country.name}
-                  key={country.name}
-                  value={country}
-                />
+                <Picker.Item label={country} key={country} value={country} />
               ))}
             </Picker>
           </Validated>
