@@ -7,9 +7,6 @@ import Main from "./components/Main";
 
 const { store, persistor } = initializeStore();
 
-// @ts-ignore TODO: Wtf TypeScript? Fix this. mapDispatchToProps?
-store.dispatch(fetchCountries());
-
 export default function App() {
   return (
     <Provider store={store}>

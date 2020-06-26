@@ -17,12 +17,13 @@ import {
   setPhoneNumber,
   setEmailAddress,
   setCountry,
+  fetchCountries,
   submitButtonPressed,
   clearButtonPressed
 } from "../store/actions";
 import Validated from "./Validated";
 
-interface MainProps {
+interface Props {
   socialSecurityNumber: TValidated<string>;
   phoneNumber: TValidated<string>;
   emailAddress: TValidated<string>;
@@ -33,86 +34,111 @@ interface MainProps {
   setPhoneNumber: (phoneNumber: string) => void;
   setEmailAddress: (emailAddress: string) => void;
   setCountry: (country: Country) => void;
+  fetchCountries: () => void;
   submitButtonPressed: () => void;
   clearButtonPressed: () => void;
 }
 
-const Main: React.StatelessComponent<MainProps> = props => (
-  <View style={styles.container}>
-    <ScrollView style={styles.form}>
-      <Validated
-        style={styles.box}
-        validity={props.socialSecurityNumber.validity}
-      >
-        <TextInput
-          placeholder="YYMMDD-XXXX"
-          onChangeText={props.setSocialSecurityNumber}
-          value={props.socialSecurityNumber.value}
-          keyboardType="number-pad"
-        />
-      </Validated>
-      <Validated style={styles.box} validity={props.phoneNumber.validity}>
-        <TextInput
-          placeholder="+46 7XX XXX XXX"
-          onChangeText={props.setPhoneNumber}
-          value={props.phoneNumber.value}
-          keyboardType="phone-pad"
-        />
-      </Validated>
-      <Validated style={styles.box} validity={props.emailAddress.validity}>
-        <TextInput
-          placeholder="jane.doe@example.com"
-          onChangeText={props.setEmailAddress}
-          value={props.emailAddress.value}
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-      </Validated>
-      <Validated
-        style={[styles.box, styles.picker]}
-        validity={props.country.validity}
-      >
-        <Picker
-          selectedValue={props.country.value}
-          onValueChange={props.setCountry}
-        >
-          <Picker.Item
-            color="#c8c8c8"
-            label={PLACEHOLDER_COUNTRY.name}
-            key="placeholder"
-            value={PLACEHOLDER_COUNTRY}
-          />
-          {props.countries.map(country => (
-            <Picker.Item
-              label={country.name}
-              key={country.name}
-              value={country}
+class Main extends React.Component<Props> {
+  componentDidMount() {
+    this.props.fetchCountries();
+  }
+
+  componentDidUpdate() {
+    this.props.fetchCountries();
+  }
+
+  render() {
+    const {
+      socialSecurityNumber,
+      phoneNumber,
+      emailAddress,
+      country,
+      countries,
+      submitted,
+      setSocialSecurityNumber,
+      setPhoneNumber,
+      setEmailAddress,
+      setCountry,
+      submitButtonPressed,
+      clearButtonPressed
+    } = this.props;
+
+    return (
+      <View style={styles.container}>
+        <ScrollView style={styles.form}>
+          <Validated
+            style={styles.box}
+            validity={socialSecurityNumber.validity}
+          >
+            <TextInput
+              placeholder="YYMMDD-XXXX"
+              onChangeText={setSocialSecurityNumber}
+              value={socialSecurityNumber.value}
+              keyboardType="number-pad"
             />
-          ))}
-        </Picker>
-      </Validated>
-    </ScrollView>
-    <View style={styles.buttons}>
-      <View style={styles.clearButton}>
-        <Button
-          onPress={props.clearButtonPressed}
-          title="Clear"
-          accessibilityLabel="Clear form"
-          color="#f54242"
-        />
+          </Validated>
+          <Validated style={styles.box} validity={phoneNumber.validity}>
+            <TextInput
+              placeholder="+46 7XX XXX XXX"
+              onChangeText={setPhoneNumber}
+              value={phoneNumber.value}
+              keyboardType="phone-pad"
+            />
+          </Validated>
+          <Validated style={styles.box} validity={emailAddress.validity}>
+            <TextInput
+              placeholder="jane.doe@example.com"
+              onChangeText={setEmailAddress}
+              value={emailAddress.value}
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
+          </Validated>
+          <Validated
+            style={[styles.box, styles.picker]}
+            validity={country.validity}
+          >
+            <Picker selectedValue={country.value} onValueChange={setCountry}>
+              <Picker.Item
+                color="#c8c8c8"
+                label={PLACEHOLDER_COUNTRY.name}
+                key="placeholder"
+                value={PLACEHOLDER_COUNTRY}
+              />
+              {countries.map(country => (
+                <Picker.Item
+                  label={country.name}
+                  key={country.name}
+                  value={country}
+                />
+              ))}
+            </Picker>
+          </Validated>
+        </ScrollView>
+        <View style={styles.buttons}>
+          <View style={styles.clearButton}>
+            <Button
+              onPress={clearButtonPressed}
+              title="Clear"
+              accessibilityLabel="Clear form"
+              color="#f54242"
+            />
+          </View>
+          <View style={styles.submitButton}>
+            <Button
+              onPress={submitButtonPressed}
+              title={submitted ? "Submitted!" : "Submit"}
+              disabled={submitted}
+              accessibilityLabel="Submit form"
+              color="#4583ff"
+            />
+          </View>
+        </View>
       </View>
-      <View style={styles.submitButton}>
-        <Button
-          onPress={props.submitButtonPressed}
-          title={props.submitted ? "Submitted!" : "Submit"}
-          disabled={props.submitted}
-          accessibilityLabel="Submit form"
-          color="#4583ff"
-        />
-      </View>
-    </View>
-  </View>
-);
+    );
+  }
+}
 
 const SPACING = 24;
 const styles = StyleSheet.create({
@@ -164,6 +190,7 @@ export default connect(
     setPhoneNumber,
     setEmailAddress,
     setCountry,
+    fetchCountries,
     submitButtonPressed,
     clearButtonPressed
   }
