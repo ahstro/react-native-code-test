@@ -39,7 +39,7 @@ interface Props {
   clearButtonPressed: () => void;
 }
 
-class Main extends React.Component<Props> {
+class Form extends React.Component<Props> {
   componentDidMount() {
     this.props.fetchCountries();
   }
@@ -194,4 +194,4 @@ export default connect(
     submitButtonPressed,
     clearButtonPressed
   }
-)(Main);
+)(Form);
