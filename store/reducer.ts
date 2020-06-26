@@ -7,14 +7,27 @@ export default (state: State = INITIAL_STATE, action: Action) => {
     case ActionType.SET_SOCIAL_SECURITY_NUMBER:
       return {
         ...state,
-        socialSecurityNumber: Validate.socialSecurityNumber(action.payload)
+        socialSecurityNumber: Validate.socialSecurityNumber(action.payload),
+        submitted: false
       };
     case ActionType.SET_PHONE_NUMBER:
-      return { ...state, phoneNumber: Validate.phoneNumber(action.payload) };
+      return {
+        ...state,
+        phoneNumber: Validate.phoneNumber(action.payload),
+        submitted: false
+      };
     case ActionType.SET_EMAIL_ADDRESS:
-      return { ...state, emailAddress: Validate.emailAddress(action.payload) };
+      return {
+        ...state,
+        emailAddress: Validate.emailAddress(action.payload),
+        submitted: false
+      };
     case ActionType.SET_COUNTRY:
-      return { ...state, country: Validate.country(action.payload) };
+      return {
+        ...state,
+        country: Validate.country(action.payload),
+        submitted: false
+      };
     case ActionType.FETCHING_COUNTRIES:
       return state;
     case ActionType.FETCHED_COUNTRIES:
