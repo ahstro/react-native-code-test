@@ -2,11 +2,10 @@
  * Validation module
  *
  * Use:
- *   import * as Validate, { Validity } from "./validation"
+ *   import * as Validate from "./validation"
  *
- *   Validate.phoneNumber(str) // => Validity
+ *   Validate.phoneNumber(someString) // => Validated<string>
  *
- * TODO: Write/lib these properly when you get internet access
  **/
 
 import Personnummer from "personnummer";

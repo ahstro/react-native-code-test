@@ -4,9 +4,8 @@
  * Use:
  *   import * as Normalize from "./normalization"
  *
- *   Normalize.phoneNumber(str) // => str
+ *   Normalize.phoneNumber(str) // => string
  *
- * TODO: Check all these against proper formats when you get internet access
  **/
 
 type Normalizer<T> = (value: T) => T;
