@@ -1,14 +1,14 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { connect } from "react-redux";
-import { fetchCountries, clearButtonPressed } from "../store/actions";
+import { fetchCountries, clearForm } from "../store/actions";
 import { State } from "../store/state";
 import { persistConfig } from "../store/persist";
 
 interface Props {
   countries: Array<string>;
   fetchCountries: () => void;
-  clearButtonPressed: () => void;
+  clearForm: () => void;
   shouldPurge: boolean;
   children: React.ReactNode;
 }
@@ -33,7 +33,7 @@ class DataGate extends React.Component<Props> {
   componentDidMount() {
     this.fetchCountriesIfMissing();
     if (this.props.shouldPurge) {
-      this.props.clearButtonPressed();
+      this.props.clearForm();
     }
   }
 
@@ -59,6 +59,6 @@ export default connect(
   }),
   {
     fetchCountries,
-    clearButtonPressed
+    clearForm
   }
 )(DataGate);

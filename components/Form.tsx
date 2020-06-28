@@ -18,7 +18,7 @@ import {
   setEmailAddress,
   setCountry,
   submitButtonPressed,
-  clearButtonPressed
+  clearForm
 } from "../store/actions";
 import Validated from "./Validated";
 
@@ -34,7 +34,7 @@ interface Props {
   setEmailAddress: (emailAddress: string) => void;
   setCountry: (country: string) => void;
   submitButtonPressed: () => void;
-  clearButtonPressed: () => void;
+  clearForm: () => void;
 }
 
 const Form: React.StatelessComponent<Props> = props => (
@@ -91,7 +91,7 @@ const Form: React.StatelessComponent<Props> = props => (
     <View style={styles.buttons}>
       <View style={styles.clearButton}>
         <Button
-          onPress={props.clearButtonPressed}
+          onPress={props.clearForm}
           title="Clear"
           accessibilityLabel="Clear form"
           color="#f54242"
@@ -161,6 +161,6 @@ export default connect(
     setEmailAddress,
     setCountry,
     submitButtonPressed,
-    clearButtonPressed
+    clearForm
   }
 )(Form);
